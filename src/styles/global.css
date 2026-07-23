@@ -45,10 +45,9 @@ h3 { font-size: .92rem; font-weight: 750; }
 :focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
 
 .home-shell {
-  width: 100%;
-  max-width: 680px;
+  width: min(680px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 32px 24px 55px;
+  padding: 35px 0 80px;
 }
 .site-header { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 30px; }
 .identity span { color: var(--muted); font-family: var(--font-sans); font-size: .75rem; }
@@ -70,17 +69,19 @@ h3 { font-size: .92rem; font-weight: 750; }
 
 .home-shell section { margin-top: 2.35rem; }
 .home-shell .site-header + section { margin-top: 0; }
+.home-shell h2 { font-size: 1.15rem; }
 .post-list { display: flex; flex-direction: column; gap: .8rem; }
 .post-list a { display: grid; grid-template-columns: 108px 1fr; gap: 16px; align-items: baseline; }
+.post-list a span { font-size: 1.06rem; }
 .post-list time { color: var(--muted); font-family: var(--font-sans); font-size: .72rem; font-style: italic; white-space: nowrap; }
 .post-list a span, .section-more a, .project-list a, .link-list a { color: var(--link); }
 .post-list a:hover span, .section-more a:hover, .project-list a:hover, .link-list a:hover { color: var(--link-hover); text-decoration: underline; text-underline-offset: 3px; }
-.section-more { margin: 1rem 0 0; font-family: var(--font-sans); font-size: .78rem; font-weight: 700; }
+.section-more { margin: 1rem 0 0; font-family: var(--font-sans); font-size: .82rem; font-weight: 700; }
 
 .project-list { border-top: 1px solid var(--border); }
 .project-list article { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border); }
-.project-list article p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
-.project-list article > a { flex: none; font-family: var(--font-sans); font-size: .72rem; font-weight: 700; }
+.project-list article p { margin: 5px 0 0; color: var(--muted); font-size: .94rem; }
+.project-list article > a { flex: none; font-family: var(--font-sans); font-size: .78rem; font-weight: 700; }
 .link-list { padding-left: 1.25rem; }
 .link-list li { margin-bottom: .45rem; }
 .home-shell footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-family: var(--font-sans); font-size: .68rem; }
@@ -188,7 +189,7 @@ h3 { font-size: .92rem; font-weight: 750; }
 
 @media (max-width: 560px) {
   html { font-size: 17px; }
-  .home-shell { padding: 25px 20px 45px; }
+  .home-shell { padding: 25px 0 55px; }
   .post-list a { grid-template-columns: 1fr; gap: 1px; }
   .project-list article { display: block; }
   .project-list article > a { display: inline-block; margin-top: 10px; }
