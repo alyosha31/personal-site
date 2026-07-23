@@ -2,19 +2,290 @@
 import '../../app/globals.css';
 
 const posts = [
-  ['Jul 18, 2026', 'The quiet craft of making things that last', 'A note on choosing durable ideas over loud ones, and why the best work often starts with paying better attention.', 'Essays'],
-  ['Jun 30, 2026', 'A field guide to useful side projects', 'Small rules for turning curiosity into something you can actually finish.', 'Building'],
-  ['May 12, 2026', 'Notes from a slower internet', 'What I’m keeping, what I’m leaving, and the tools that help me think clearly.', 'Notes'],
-  ['Apr 04, 2026', 'Learning in public, without performing', 'On sharing unfinished work with generosity, context, and a little less noise.', 'Essays'],
+  {
+    slug: 'quiet-craft',
+    date: '2026-07-18',
+    title: 'The quiet craft of making things that last',
+    description: 'Choosing durable ideas over loud ones, and why the best work starts with paying better attention.',
+    tag: 'essay',
+  },
+  {
+    slug: 'useful-side-projects',
+    date: '2026-06-30',
+    title: 'A field guide to useful side projects',
+    description: 'Small rules for turning curiosity into something you can actually finish.',
+    tag: 'building',
+  },
+  {
+    slug: 'slower-internet',
+    date: '2026-05-12',
+    title: 'Notes from a slower internet',
+    description: 'What I’m keeping, what I’m leaving, and the tools that help me think clearly.',
+    tag: 'notes',
+  },
+  {
+    slug: 'learning-in-public',
+    date: '2026-04-04',
+    title: 'Learning in public, without performing',
+    description: 'Sharing unfinished work with generosity, context, and a little less noise.',
+    tag: 'essay',
+  },
 ];
 ---
 
-<main>
-  <nav class="nav shell" aria-label="Main navigation"><a class="wordmark" href="#top">/a</a><div class="nav-links"><a href="#writing">Writing</a><a href="#projects">Projects</a><a href="#about">About</a></div><a class="nav-contact" href="mailto:hello@example.com">Say hello <span>↗</span></a></nav>
-  <section class="hero shell" id="top"><p class="eyebrow">Personal notes · ideas · things made</p><h1>Making sense of<br /><em>the messy middle.</em></h1><div class="hero-bottom"><p class="intro">I’m Alex — a builder and curious person writing about technology, creative work, and the small choices that shape a good life.</p><a class="scroll-cue" href="#writing"><span class="arrow-circle">↓</span> Start reading</a></div></section>
-  <section class="feature shell" id="writing"><div class="section-label"><span>01</span> Featured writing</div><article class="feature-card"><div class="feature-art" aria-hidden="true"><span class="art-sun"></span><span class="art-line line-one"></span><span class="art-line line-two"></span><span class="art-note">a little<br />further →</span></div><div class="feature-copy"><p class="post-meta">{posts[0][0]} <span>·</span> {posts[0][3]}</p><h2>{posts[0][1]}</h2><p>{posts[0][2]}</p><a class="read-link" href="#read">Read the essay <span>↗</span></a></div></article></section>
-  <section class="archive shell"><div class="archive-head"><div class="section-label"><span>02</span> The archive</div><p>A running collection of thoughts, experiments, and observations.</p></div><div class="post-list">{posts.slice(1).map((post) => <a class="post-row" href="#read"><p class="post-meta">{post[0]}</p><div><h3>{post[1]}</h3><p>{post[2]}</p></div><span class="post-tag">{post[3]}</span><span class="row-arrow">↗</span></a>)}</div><a class="all-posts" href="#writing">Browse all writing <span>→</span></a></section>
-  <section class="projects shell" id="projects"><div class="section-label"><span>03</span> Things I’m making</div><div class="projects-grid"><div><h2>Ideas are better<br /><em>when they ship.</em></h2></div><div class="project-placeholder"><span>Coming soon</span><p>A few experiments and tools<br />will live here soon.</p></div></div></section>
-  <section class="about shell" id="about"><p class="eyebrow">A bit about me</p><div class="about-grid"><h2>Still figuring it out,<br /><em>one note at a time.</em></h2><p>This is where I keep the things I don’t want to lose: questions, half-formed ideas, and lessons from building on the internet. Thanks for stopping by.</p></div></section>
-  <footer class="footer shell"><span>© 2026 Alex</span><span>Made with curiosity + a decent cup of coffee</span><div><a href="#top">Top ↑</a><a href="https://github.com">GitHub ↗</a></div></footer>
-</main>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Alyosha's notes on technology, creative work, and things made." />
+    <title>alyosha.txt — personal site</title>
+  </head>
+  <body>
+    <main class="terminal" aria-label="Alyosha's personal site">
+      <header class="terminal-bar">
+        <div class="window-controls" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p>alyosha@personal-site: ~/writing</p>
+        <span class="connection"><i></i> online</span>
+      </header>
+
+      <div class="workspace">
+        <aside class="explorer" aria-label="Site navigation">
+          <div class="explorer-title">EXPLORER</div>
+          <div class="tree">
+            <button class="tree-folder" type="button" data-view-target="home">
+              <span>▾</span> PERSONAL-SITE
+            </button>
+            <div class="tree-files">
+              <button type="button" data-view-target="home"><span class="file-icon">#</span> README.md</button>
+              <button type="button" data-view-target="writing"><span class="folder-icon">▸</span> writing/</button>
+              <button type="button" data-view-target="projects"><span class="folder-icon">▸</span> projects/</button>
+              <button type="button" data-view-target="about"><span class="file-icon">~</span> about.txt</button>
+            </div>
+          </div>
+          <div class="explorer-note">
+            <span>// currently</span>
+            learning, building,<br />writing it down.
+          </div>
+        </aside>
+
+        <section class="editor">
+          <nav class="tabs" aria-label="Open files">
+            <button class="tab active" type="button" data-view-target="home">README.md <span>×</span></button>
+            <button class="tab" type="button" data-view-target="writing">writing/ <span>×</span></button>
+            <button class="tab" type="button" data-view-target="projects">projects/ <span>×</span></button>
+            <button class="tab" type="button" data-view-target="about">about.txt <span>×</span></button>
+          </nav>
+
+          <div class="buffer" id="buffer">
+            <section class="view active" data-view="home">
+              <div class="line"><span class="ln">1</span><span class="comment">&lt;!-- hello, internet --&gt;</span></div>
+              <div class="line hero-line"><span class="ln">2</span><h1><span class="syntax">#</span> I make things<br />&nbsp;&nbsp;and write about them<span class="cursor">█</span></h1></div>
+              <div class="line"><span class="ln">3</span></div>
+              <div class="line intro-line"><span class="ln">4</span><p><span class="keyword">const</span> <span class="variable">me</span> = {</p></div>
+              <div class="line intro-line"><span class="ln">5</span><p>&nbsp;&nbsp;name: <span class="string">"Alyosha"</span>,</p></div>
+              <div class="line intro-line"><span class="ln">6</span><p>&nbsp;&nbsp;interests: [<span class="string">"technology"</span>, <span class="string">"creative work"</span>, <span class="string">"good questions"</span>],</p></div>
+              <div class="line intro-line"><span class="ln">7</span><p>&nbsp;&nbsp;status: <span class="string">"figuring it out"</span></p></div>
+              <div class="line intro-line"><span class="ln">8</span><p>};</p></div>
+              <div class="line"><span class="ln">9</span></div>
+              <div class="line"><span class="ln">10</span><p class="comment">// start here</p></div>
+              <div class="line action-line"><span class="ln">11</span><button class="terminal-link" type="button" data-view-target="writing">→ cd writing/</button></div>
+              <div class="line action-line"><span class="ln">12</span><button class="terminal-link" type="button" data-view-target="projects">→ ls projects/</button></div>
+            </section>
+
+            <section class="view" data-view="writing">
+              <div class="line"><span class="ln">1</span><p class="comment"># ~/writing — use j/k to move, Enter to open</p></div>
+              <div class="line"><span class="ln">2</span></div>
+              <div class="post-list" role="listbox" aria-label="Writing archive">
+                {posts.map((post, index) => (
+                  <button class="post-entry" type="button" data-post-index={index} data-post-slug={post.slug} role="option" aria-selected={index === 0 ? 'true' : 'false'}>
+                    <span class="ln">{index + 3}</span>
+                    <span class="selection-marker">{index === 0 ? '>' : ' '}</span>
+                    <span class="post-date">{post.date}</span>
+                    <span class="post-title">{post.title}</span>
+                    <span class="post-tag">[{post.tag}]</span>
+                  </button>
+                ))}
+              </div>
+              <div class="line"><span class="ln">7</span></div>
+              <div class="line"><span class="ln">8</span><p class="comment">4 posts · more soon</p></div>
+            </section>
+
+            <section class="view" data-view="projects">
+              <div class="line"><span class="ln">1</span><p class="comment"># ~/projects</p></div>
+              <div class="line"><span class="ln">2</span></div>
+              <div class="line project-line"><span class="ln">3</span><p><span class="permission">drwxr-xr-x</span>&nbsp; alyosha&nbsp; <span class="muted">experiments/</span></p></div>
+              <div class="line project-line"><span class="ln">4</span><p><span class="permission">-rw-r--r--</span>&nbsp; alyosha&nbsp; <span class="string">coming-soon.md</span></p></div>
+              <div class="line"><span class="ln">5</span></div>
+              <div class="line"><span class="ln">6</span><p>Ideas are better when they ship.</p></div>
+              <div class="line"><span class="ln">7</span><p class="muted">A few experiments and tools will live here soon.</p></div>
+            </section>
+
+            <section class="view" data-view="about">
+              <div class="line"><span class="ln">1</span><p class="comment"># about.txt</p></div>
+              <div class="line"><span class="ln">2</span></div>
+              <div class="line prose-line"><span class="ln">3</span><p>I’m Alyosha — a builder and curious person writing about technology, creative work, and the small choices that shape a good life.</p></div>
+              <div class="line"><span class="ln">4</span></div>
+              <div class="line prose-line"><span class="ln">5</span><p>This is where I keep the things I don’t want to lose: questions, half-formed ideas, and lessons from building on the internet.</p></div>
+              <div class="line"><span class="ln">6</span></div>
+              <div class="line action-line"><span class="ln">7</span><a class="terminal-link" href="mailto:hello@example.com">→ mail --to alyosha</a></div>
+              <div class="line action-line"><span class="ln">8</span><a class="terminal-link" href="https://github.com/alyosha31">→ open github.com/alyosha31</a></div>
+            </section>
+
+            <section class="view post-view" data-view="post">
+              <div class="line"><span class="ln">1</span><button class="terminal-link back-button" type="button">← :back</button></div>
+              <div class="line"><span class="ln">2</span></div>
+              <div class="line"><span class="ln">3</span><p class="comment post-detail-meta"></p></div>
+              <div class="line post-heading"><span class="ln">4</span><h2></h2></div>
+              <div class="line"><span class="ln">5</span></div>
+              <div class="line prose-line"><span class="ln">6</span><p class="post-detail-description"></p></div>
+              <div class="line"><span class="ln">7</span></div>
+              <div class="line prose-line"><span class="ln">8</span><p class="muted">This essay is still being written. Check back soon.</p></div>
+            </section>
+          </div>
+
+          <div class="command-area">
+            <form id="command-form" autocomplete="off">
+              <label for="command-input">:</label>
+              <input id="command-input" type="text" aria-label="Vim command" placeholder="type a command…" spellcheck="false" />
+            </form>
+            <p id="command-feedback" role="status">Press <kbd>:</kbd> for commands · <kbd>?</kbd> for help</p>
+          </div>
+
+          <footer class="statusline">
+            <div><strong id="mode">NORMAL</strong><span id="active-file">README.md</span></div>
+            <div class="keys"><span><kbd>j</kbd><kbd>k</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>/</kbd> search</span><span><kbd>:</kbd> command</span></div>
+            <div><span>utf-8</span><span id="position">1,1</span></div>
+          </footer>
+        </section>
+      </div>
+    </main>
+
+    <script define:vars={{ posts }}>
+      const views = [...document.querySelectorAll('[data-view]')];
+      const tabs = [...document.querySelectorAll('.tab')];
+      const input = document.querySelector('#command-input');
+      const form = document.querySelector('#command-form');
+      const feedback = document.querySelector('#command-feedback');
+      const activeFile = document.querySelector('#active-file');
+      const position = document.querySelector('#position');
+      const mode = document.querySelector('#mode');
+      let activeView = 'home';
+      let selectedPost = 0;
+      let previousView = 'writing';
+      let lastKey = '';
+
+      const fileNames = { home: 'README.md', writing: 'writing/', projects: 'projects/', about: 'about.txt', post: 'post.md' };
+
+      function showView(name) {
+        if (name === 'post') previousView = activeView;
+        activeView = name;
+        views.forEach((view) => view.classList.toggle('active', view.dataset.view === name));
+        tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.viewTarget === name));
+        activeFile.textContent = fileNames[name];
+        position.textContent = name === 'writing' ? `${selectedPost + 3},1` : '1,1';
+        document.querySelector('#buffer').scrollTop = 0;
+        history.replaceState(null, '', name === 'home' ? location.pathname : `#${name}`);
+      }
+
+      function selectPost(index) {
+        const entries = [...document.querySelectorAll('.post-entry')];
+        selectedPost = Math.max(0, Math.min(entries.length - 1, index));
+        entries.forEach((entry, i) => {
+          const selected = i === selectedPost;
+          entry.classList.toggle('selected', selected);
+          entry.setAttribute('aria-selected', String(selected));
+          entry.querySelector('.selection-marker').textContent = selected ? '>' : ' ';
+        });
+        entries[selectedPost]?.scrollIntoView({ block: 'nearest' });
+        position.textContent = `${selectedPost + 3},1`;
+      }
+
+      function openPost(index) {
+        const post = posts[index];
+        if (!post) return;
+        document.querySelector('.post-heading h2').textContent = post.title;
+        document.querySelector('.post-detail-meta').textContent = `${post.date} · ${post.tag}`;
+        document.querySelector('.post-detail-description').textContent = post.description;
+        showView('post');
+      }
+
+      function runCommand(raw) {
+        const command = raw.trim().replace(/^:/, '').toLowerCase();
+        const routes = { home: 'home', readme: 'home', writing: 'writing', posts: 'writing', projects: 'projects', about: 'about' };
+        if (routes[command]) {
+          showView(routes[command]);
+          feedback.textContent = `opened ${fileNames[routes[command]]}`;
+        } else if (command === 'help' || command === '?') {
+          feedback.textContent = ':home  :writing  :projects  :about  :github  :clear';
+        } else if (command === 'github') {
+          window.open('https://github.com/alyosha31', '_blank', 'noopener');
+          feedback.textContent = 'opening github…';
+        } else if (command === 'clear') {
+          feedback.textContent = '';
+        } else if (command) {
+          feedback.textContent = `E492: Not an editor command: ${command}`;
+        }
+        input.value = '';
+        input.blur();
+        mode.textContent = 'NORMAL';
+      }
+
+      document.querySelectorAll('[data-view-target]').forEach((button) => {
+        button.addEventListener('click', () => showView(button.dataset.viewTarget));
+      });
+      document.querySelectorAll('.post-entry').forEach((entry, index) => {
+        entry.addEventListener('mouseenter', () => selectPost(index));
+        entry.addEventListener('focus', () => selectPost(index));
+        entry.addEventListener('click', () => openPost(index));
+      });
+      document.querySelector('.back-button').addEventListener('click', () => showView(previousView));
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        runCommand(input.value);
+      });
+      input.addEventListener('focus', () => { mode.textContent = 'COMMAND'; });
+      input.addEventListener('blur', () => { mode.textContent = 'NORMAL'; });
+
+      window.addEventListener('keydown', (event) => {
+        if (document.activeElement === input) {
+          if (event.key === 'Escape') {
+            input.value = '';
+            input.blur();
+          }
+          return;
+        }
+        if (event.key === ':' || event.key === '/') {
+          event.preventDefault();
+          input.placeholder = event.key === '/' ? 'search posts…' : 'type a command…';
+          input.focus();
+          if (event.key === '/') feedback.textContent = 'Search is coming with the first real posts.';
+          return;
+        }
+        if (event.key === '?') {
+          feedback.textContent = 'j/k move · Enter open · gg/G jump · Esc back · : command';
+          return;
+        }
+        if (event.key === 'Escape' && activeView !== 'home') {
+          showView(activeView === 'post' ? previousView : 'home');
+          return;
+        }
+        if (activeView === 'writing') {
+          if (event.key === 'j' || event.key === 'ArrowDown') selectPost(selectedPost + 1);
+          if (event.key === 'k' || event.key === 'ArrowUp') selectPost(selectedPost - 1);
+          if (event.key === 'Enter') openPost(selectedPost);
+          if (event.key === 'G') selectPost(posts.length - 1);
+          if (event.key === 'g' && lastKey === 'g') selectPost(0);
+        }
+        lastKey = event.key;
+        window.setTimeout(() => { lastKey = ''; }, 450);
+      });
+
+      const initialView = location.hash.replace('#', '');
+      if (['writing', 'projects', 'about'].includes(initialView)) showView(initialView);
+      selectPost(0);
+    </script>
+  </body>
+</html>
