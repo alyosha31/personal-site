@@ -5,6 +5,10 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 const posts = (await getCollection('posts'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const projects = (await getCollection('projects'))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <SiteLayout
@@ -29,27 +33,18 @@ const posts = (await getCollection('posts'))
       <section>
         <h2>Projects</h2>
         <div class="project-list">
-          <article>
-            <div>
-              <h3>cloud-sandbox</h3>
-              <p>An HTTP sandbox for safely running code and tools on behalf of agents.</p>
-            </div>
-            <a href="https://github.com/alyosha31/cloud-sandbox">Source →</a>
-          </article>
-          <article>
-            <div>
-              <h3>InferC <span aria-label="in progress">(in progress)</span></h3>
-              <p>A C17 inference runtime built from scratch: memory layout, checkpoint formats, KV caches, and the transformer forward pass.</p>
-            </div>
-            <a href="https://github.com/alyosha31/inferC">Source →</a>
-          </article>
-          <article>
-            <div>
-              <h3>Personal site</h3>
-              <p>A small home for my writing, experiments, and things I want to remember.</p>
-            </div>
-            <a href="https://github.com/alyosha31/personal-site">Source →</a>
-          </article>
+          {projects.map((project) => (
+            <article>
+              <div>
+                <h3>
+                  {project.data.title}
+                  {project.data.status && <span aria-label={project.data.status}> ({project.data.status})</span>}
+                </h3>
+                <p>{project.data.description}</p>
+              </div>
+              <a href={project.data.source}>Source →</a>
+            </article>
+          ))}
         </div>
       </section>
 

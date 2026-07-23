@@ -78,6 +78,21 @@ Use GitHub-style markers for a labeled callout. Supported labels are `NOTE`,
 > This appears in a distinct note pane.
 ```
 
+Projects work the same way: add a Markdown file in `src/content/projects/`.
+The homepage reads and sorts them by `order`, so project data stays out of the
+page template:
+
+```md
+---
+title: "Project name"
+description: "What it is and why it matters."
+source: "https://github.com/your-name/project"
+order: 4
+status: "in progress" # optional
+draft: true            # optional; hides the project
+---
+```
+
 Publishing a post is:
 
 ```text
