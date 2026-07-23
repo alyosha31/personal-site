@@ -74,7 +74,7 @@ a layer up: what state should survive, which tools should an agent receive, how 
 we observe failures, and how do we evaluate whether the agent did the right
 thing rather than merely finishing?
 
-## So, was it killed?
+## Bury it, RIP?
 
 Not really. I am not gonna lie here and say the idea was novel. In fact, hundreds of startups had already been solving a variation of this problem before I even understood the premise.
 
