@@ -34,3 +34,66 @@ const { Content } = await render(post);
       </article>
       <footer><a href="/writing/">← Back to writing</a></footer>
 </SiteLayout>
+
+<script>
+  const articleBody = document.querySelector('.article-body');
+
+  articleBody?.querySelectorAll<HTMLPreElement>('pre').forEach((pre) => {
+    if (pre.parentElement?.classList.contains('code-panel')) return;
+
+    const code = pre.querySelector('code');
+    const languageClass = [...(code?.classList ?? []), ...pre.classList]
+      .find((className) => className.startsWith('language-'));
+    const language = pre.dataset.language
+      ?? languageClass?.replace('language-', '')
+      ?? 'text';
+
+    const panel = document.createElement('div');
+    panel.className = 'code-panel';
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'code-toolbar';
+
+    const label = document.createElement('span');
+    label.textContent = language;
+
+    const copyButton = document.createElement('button');
+    copyButton.type = 'button';
+    copyButton.className = 'code-copy';
+    copyButton.textContent = 'Copy';
+    copyButton.setAttribute('aria-label', `Copy ${language} code`);
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code?.textContent ?? pre.textContent ?? '');
+        copyButton.textContent = 'Copied';
+        window.setTimeout(() => {
+          copyButton.textContent = 'Copy';
+        }, 1600);
+      } catch {
+        copyButton.textContent = 'Select to copy';
+      }
+    });
+
+    toolbar.append(label, copyButton);
+    pre.before(panel);
+    panel.append(toolbar, pre);
+  });
+
+  const calloutKinds = new Set(['NOTE', 'TIP', 'IMPORTANT', 'WARNING', 'CAUTION']);
+
+  articleBody?.querySelectorAll<HTMLQuoteElement>('blockquote').forEach((quote) => {
+    const firstParagraph = quote.querySelector('p');
+    if (!firstParagraph) return;
+
+    const match = firstParagraph.textContent?.trim().match(/^\[!(\w+)\]/);
+    const kind = match?.[1]?.toUpperCase();
+    if (!kind || !calloutKinds.has(kind)) return;
+
+    firstParagraph.innerHTML = firstParagraph.innerHTML
+      .replace(/^\s*\[!\w+\]\s*(?:<br\s*\/?>)?\s*/i, '');
+    quote.classList.add('callout');
+    quote.dataset.callout = kind.toLowerCase();
+    quote.dataset.label = kind.charAt(0) + kind.slice(1).toLowerCase();
+  });
+</script>

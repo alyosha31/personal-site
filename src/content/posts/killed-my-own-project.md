@@ -34,9 +34,24 @@ The prototype grew into two paths:
 - a stateless `/exec` endpoint for one-off programs;
 - persistent `/sessions` with their own workspace and Python environment.
 
+The stateless path was deliberately plain:
+
+```bash
+curl -X POST http://localhost:8080/exec \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "code": "print(\"hello from the sandbox\")",
+    "timeout_seconds": 10
+  }'
+```
+
 Commands run in subprocesses with timeouts and captured output. I also added
 connectors for Google Cloud Storage, BigQuery, and Firestore, plus Kubernetes
 manifests intended to run the service under gVisor.
+
+> [!NOTE]
+> The repository is a prototype and a way to understand the boundary. It is not
+> presented as a production-grade multi-tenant security system.
 
 It is still a prototype, not a production security boundary. The current
 service can host multiple sessions inside one container; a stronger deployment

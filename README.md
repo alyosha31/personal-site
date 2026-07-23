@@ -30,11 +30,11 @@ The generated static site is written to `dist/`.
 ## Project structure
 
 ```text
-src/pages/index.astro          Interactive terminal homepage
+src/pages/index.astro          Homepage
 src/pages/writing/             Blog index and article routes
 src/content/posts/             Markdown blog posts
-src/scripts/terminal.ts        Commands, history, and autocomplete
-src/styles/global.css          Shared terminal and article styles
+src/layouts/SiteLayout.astro   Shared page shell and theme toggle
+src/styles/global.css          Shared site and article styles
 public/                        Static assets
 astro.config.mjs               Astro configuration
 wrangler.jsonc                 Cloudflare Workers configuration
@@ -53,6 +53,29 @@ description: "A short description for previews and search."
 ---
 
 The article goes here.
+```
+
+Fenced Markdown code is syntax highlighted and displayed with a language label
+and copy button:
+
+````md
+```python
+print("hello")
+```
+````
+
+Use standard Markdown for a quotation:
+
+```md
+> A quoted passage.
+```
+
+Use GitHub-style markers for a labeled callout. Supported labels are `NOTE`,
+`TIP`, `IMPORTANT`, `WARNING`, and `CAUTION`:
+
+```md
+> [!NOTE]
+> This appears in a distinct note pane.
 ```
 
 Publishing a post is:
