@@ -1,5 +1,5 @@
 ---
-title: "Ambitious Project found DEAD 24-hours after birth."
+title: "Ambitious Project Found DEAD 24-hours After Birth"
 description: "I started building a sandbox for coding agents. Google announced its alternative the next day."
 date: "2026-05-23"
 tags: ["agents", "infrastructure", "sandboxing"]
