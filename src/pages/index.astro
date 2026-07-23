@@ -8,14 +8,9 @@ const posts = (await getCollection('posts'))
 ---
 
 <SiteLayout
-  title="{ Alyosha }"
   description="Alyosha's personal site — writing, projects, and notes."
   shellClass="home-shell"
 >
-      <div class="color-band" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-
       <section>
         <h2>Writing</h2>
         <div class="post-list">
@@ -36,16 +31,17 @@ const posts = (await getCollection('posts'))
         <div class="project-list">
           <article>
             <div>
+              <h3>cloud-sandbox</h3>
+              <p>An HTTP sandbox for safely running code and tools on behalf of AI agents.</p>
+            </div>
+            <a href="https://github.com/alyosha31/cloud-sandbox">Source →</a>
+          </article>
+          <article>
+            <div>
               <h3>Personal site</h3>
               <p>A small home for my writing, experiments, and things I want to remember.</p>
             </div>
             <a href="https://github.com/alyosha31/personal-site">Source →</a>
-          </article>
-          <article>
-            <div>
-              <h3>More soon</h3>
-              <p>I’m gathering a few projects worth showing properly.</p>
-            </div>
           </article>
         </div>
       </section>
@@ -53,12 +49,15 @@ const posts = (await getCollection('posts'))
       <section>
         <h2>Who I am</h2>
         <p>
-          I’m Alyosha — a builder and curious person writing about technology,
-          creative work, and the small choices that shape a good life.
+          I’m Mohit Guleria, usually Alyosha online. I did my undergrad at IIT
+          Roorkee, and I’m a builder in the machine-learning space.
         </p>
         <p>
-          This is where I keep the things I don’t want to lose: questions,
-          half-formed ideas, and lessons from building on the internet.
+          I want to work on the systems problems around AI agents: how they run
+          code safely, how we evaluate whether they actually work, and how we
+          build the infrastructure that makes them dependable. I like working
+          close to the machinery—runtimes, sandboxes, developer tools, and the
+          lower-level pieces behind intelligent software.
         </p>
       </section>
 

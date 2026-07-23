@@ -2,14 +2,12 @@
 import '../styles/global.css';
 
 interface Props {
-  title: string;
   description: string;
   shellClass?: string;
   bodyClass?: string;
 }
 
 const {
-  title,
   description,
   shellClass = 'document-shell',
   bodyClass = '',
@@ -23,7 +21,7 @@ const {
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
-    <title>{title}</title>
+    <title>Alyosha</title>
     <script is:inline>
       try {
         const savedTheme = localStorage.getItem('theme');
@@ -43,8 +41,8 @@ const {
     <main class={shellClass}>
       <header class="site-header">
         <a href="/" class="identity">
-          <h1>{`{ Alyosha }`}</h1>
-          <span>builder • writer • curious</span>
+          <h1>Alyosha</h1>
+          <span>ML systems • agents • infrastructure</span>
         </a>
         <button
           class="theme-toggle"
