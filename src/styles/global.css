@@ -44,7 +44,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
 
 .terminal-app {
-  width: min(1180px, calc(100% - 36px));
+  width: min(1040px, calc(100% - 36px));
   height: calc(100vh - 36px);
   min-height: 620px;
   display: grid;
@@ -54,6 +54,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--panel);
+  font-size: clamp(14px, 1.12vw, 16px);
   box-shadow: 0 26px 90px rgba(0, 0, 0, .45);
 }
 
@@ -98,7 +99,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .ascii {
   margin: 0 0 27px;
   color: var(--accent);
-  font: 700 clamp(7px, 1.15vw, 14px)/1.18 "SFMono-Regular", Consolas, monospace;
+  font: 700 clamp(8px, 1.12vw, 14px)/1.18 "SFMono-Regular", Consolas, monospace;
   letter-spacing: -.06em;
   text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 22%, transparent);
   white-space: pre;
