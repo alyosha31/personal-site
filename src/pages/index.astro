@@ -1,41 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
-import '../styles/global.css';
+import SiteLayout from '../layouts/SiteLayout.astro';
 
 const posts = (await getCollection('posts'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Alyosha's personal site — writing, projects, and notes." />
-    <meta name="theme-color" content="#ffffff" />
-    <title>{`{ Alyosha }`}</title>
-    <script is:inline>
-      const savedTheme = localStorage.getItem('theme');
-      const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (savedTheme === 'dark' || (!savedTheme && preferredDark)) {
-        document.documentElement.dataset.theme = 'dark';
-      }
-    </script>
-  </head>
-  <body>
-    <main class="home-shell">
-      <header class="site-header">
-        <a href="/" class="identity">
-          <h1>{`{ Alyosha }`}</h1>
-          <span>builder • writer • curious</span>
-        </a>
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
-          <span class="theme-light" aria-hidden="true">☼</span>
-          <span class="theme-dark" aria-hidden="true">◐</span>
-        </button>
-      </header>
-
+<SiteLayout
+  title="{ Alyosha }"
+  description="Alyosha's personal site — writing, projects, and notes."
+  shellClass="home-shell"
+>
       <div class="color-band" aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span>
       </div>
@@ -97,23 +73,4 @@ const posts = (await getCollection('posts'))
       <footer>
         <p>Built with Astro. No tracking, no cookies.</p>
       </footer>
-    </main>
-
-    <script>
-      const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
-      const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-      toggle?.addEventListener('click', () => {
-        const dark = document.documentElement.dataset.theme === 'dark';
-        if (dark) {
-          delete document.documentElement.dataset.theme;
-          localStorage.setItem('theme', 'light');
-          themeMeta?.setAttribute('content', '#ffffff');
-        } else {
-          document.documentElement.dataset.theme = 'dark';
-          localStorage.setItem('theme', 'dark');
-          themeMeta?.setAttribute('content', '#111113');
-        }
-      });
-    </script>
-  </body>
-</html>
+</SiteLayout>

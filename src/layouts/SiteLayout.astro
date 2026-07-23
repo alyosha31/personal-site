@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  shellClass?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  shellClass = 'document-shell',
+  bodyClass = '',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <title>{title}</title>
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && preferredDark)) {
+          document.documentElement.dataset.theme = 'dark';
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#111113');
+        } else {
+          document.documentElement.dataset.theme = 'light';
+        }
+      } catch {
+        document.documentElement.dataset.theme = 'light';
+      }
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <main class={shellClass}>
+      <header class="site-header">
+        <a href="/" class="identity">
+          <h1>{`{ Alyosha }`}</h1>
+          <span>builder • writer • curious</span>
+        </a>
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="Toggle color theme"
+          aria-pressed="false"
+        >
+          <span class="theme-light" aria-hidden="true">☼</span>
+          <span class="theme-dark" aria-hidden="true">◐</span>
+        </button>
+      </header>
+      <slot />
+    </main>
+
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
+      function reflectTheme() {
+        const dark = document.documentElement.dataset.theme === 'dark';
+        toggle?.setAttribute('aria-pressed', String(dark));
+        toggle?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+        themeMeta?.setAttribute('content', dark ? '#111113' : '#ffffff');
+      }
+
+      reflectTheme();
+      toggle?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch {
+          // Theme still applies for the current page when storage is unavailable.
+        }
+        reflectTheme();
+      });
+    </script>
+  </body>
+</html>

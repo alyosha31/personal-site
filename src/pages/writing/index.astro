@@ -1,22 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
-import '../../styles/global.css';
+import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const posts = (await getCollection('posts'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Writing by Alyosha." />
-    <title>~/writing — Alyosha</title>
-  </head>
-  <body class="document-page">
-    <main class="document-shell">
+<SiteLayout
+  title="Writing — Alyosha"
+  description="Writing by Alyosha."
+  bodyClass="document-page"
+>
       <nav><a href="/">← cd ~</a><span>~/writing</span></nav>
       <header>
         <p class="command-label">$ ls -la ./writing</p>
@@ -32,6 +27,4 @@ const posts = (await getCollection('posts'))
           </a>
         ))}
       </div>
-    </main>
-  </body>
-</html>
+</SiteLayout>

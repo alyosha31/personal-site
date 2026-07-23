@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import '../../styles/global.css';
+import SiteLayout from '../../layouts/SiteLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -13,16 +13,12 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={post.data.description} />
-    <title>{post.data.title} — Alyosha</title>
-  </head>
-  <body class="document-page">
-    <main class="document-shell article-shell">
+<SiteLayout
+  title={`${post.data.title} — Alyosha`}
+  description={post.data.description}
+  shellClass="document-shell article-shell"
+  bodyClass="document-page"
+>
       <nav><a href="/">cd ~</a><span>/</span><a href="/writing/">writing</a><span>/ {post.id}.md</span></nav>
       <article>
         <header>
@@ -37,6 +33,4 @@ const { Content } = await render(post);
         <div class="article-body"><Content /></div>
       </article>
       <footer><a href="/writing/">← back to writing</a></footer>
-    </main>
-  </body>
-</html>
+</SiteLayout>
