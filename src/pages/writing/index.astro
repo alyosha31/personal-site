@@ -12,9 +12,8 @@ const posts = (await getCollection('posts'))
   description="Writing by Alyosha."
   bodyClass="document-page"
 >
-      <nav><a href="/">← cd ~</a><span>~/writing</span></nav>
+      <nav aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Writing</span></nav>
       <header>
-        <p class="command-label">$ ls -la ./writing</p>
         <h1>Writing</h1>
         <p>Notes from the messy middle.</p>
       </header>
@@ -23,7 +22,7 @@ const posts = (await getCollection('posts'))
           <a href={`/writing/${post.id}/`}>
             <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
             <div><h2>{post.data.title}</h2><p>{post.data.description}</p></div>
-            <span>cat ↗</span>
+            <span>Read →</span>
           </a>
         ))}
       </div>

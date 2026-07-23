@@ -87,7 +87,6 @@ h3 { font-size: .92rem; font-weight: 750; }
 .document-shell nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 3rem; color: var(--muted); font-family: var(--font-sans); font-size: .7rem; }
 .document-shell nav a { color: var(--link); }
 .document-shell > header, .article-shell article > header { margin-bottom: 2.5rem; }
-.command-label { color: var(--muted); font-family: var(--font-mono); font-size: .7rem; }
 .document-shell h1 { margin: .7rem 0; font-size: 2rem; font-weight: 800; }
 .document-shell header > p:last-child { color: var(--muted); }
 .document-list { border-top: 1px solid var(--border); }

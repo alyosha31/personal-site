@@ -19,10 +19,11 @@ const { Content } = await render(post);
   shellClass="document-shell article-shell"
   bodyClass="document-page"
 >
-      <nav><a href="/">cd ~</a><span>/</span><a href="/writing/">writing</a><span>/ {post.id}.md</span></nav>
+      <nav aria-label="Breadcrumb">
+        <a href="/">Home</a><span>/</span><a href="/writing/">Writing</a><span>/</span><span>{post.data.title}</span>
+      </nav>
       <article>
         <header>
-          <p class="command-label">$ cat {post.id}.md</p>
           <h1>{post.data.title}</h1>
           <div class="article-meta">
             <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
@@ -32,5 +33,5 @@ const { Content } = await render(post);
         </header>
         <div class="article-body"><Content /></div>
       </article>
-      <footer><a href="/writing/">← back to writing</a></footer>
+      <footer><a href="/writing/">← Back to writing</a></footer>
 </SiteLayout>
