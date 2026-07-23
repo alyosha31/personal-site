@@ -30,15 +30,19 @@ The generated static site is written to `dist/`.
 ## Project structure
 
 ```text
-src/pages/index.astro   Homepage
-app/globals.css         Shared visual styles
-public/                 Static assets
-astro.config.mjs        Astro configuration
+src/pages/index.astro          Interactive terminal homepage
+src/pages/writing/             Blog index and article routes
+src/content/posts/             Markdown blog posts
+src/scripts/terminal.ts        Commands, history, and autocomplete
+src/styles/global.css          Shared terminal and article styles
+public/                        Static assets
+astro.config.mjs               Astro configuration
+wrangler.jsonc                 Cloudflare Workers configuration
 ```
 
 ## Writing workflow
 
-Blog posts will live as Markdown files in `src/content/posts/`. A typical post
+Blog posts live as Markdown files in `src/content/posts/`. A typical post
 will look like this:
 
 ```md
@@ -51,7 +55,7 @@ description: "A short description for previews and search."
 The article goes here.
 ```
 
-Once the content collection is connected, publishing a post will be:
+Publishing a post is:
 
 ```text
 write Markdown → commit → push to GitHub → rebuild the site

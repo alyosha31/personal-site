@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={post.data.description} />
+    <title>{post.data.title} — Alyosha</title>
+  </head>
+  <body class="document-page">
+    <main class="document-shell article-shell">
+      <nav><a href="/">cd ~</a><span>/</span><a href="/writing/">writing</a><span>/ {post.id}.md</span></nav>
+      <article>
+        <header>
+          <p class="command-label">$ cat {post.id}.md</p>
+          <h1>{post.data.title}</h1>
+          <div class="article-meta">
+            <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
+            <span>{post.data.tags.join(' · ')}</span>
+          </div>
+          <p>{post.data.description}</p>
+        </header>
+        <div class="article-body"><Content /></div>
+      </article>
+      <footer><a href="/writing/">← back to writing</a></footer>
+    </main>
+  </body>
+</html>
