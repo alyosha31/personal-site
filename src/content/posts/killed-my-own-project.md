@@ -1,5 +1,5 @@
 ---
-title: "I Built a Project. Twenty-Four Hours Later, It Was Already Obsolete."
+title: "Ambitious Project found DEAD 24-hours after birth."
 description: "I started building a sandbox for coding agents. Google announced its alternative the next day."
 date: "2026-05-23"
 tags: ["agents", "infrastructure", "sandboxing"]
