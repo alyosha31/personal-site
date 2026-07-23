@@ -19,14 +19,16 @@ const input = document.querySelector<HTMLInputElement>('#terminal-input');
 const suggestions = document.querySelector<HTMLElement>('#suggestions');
 const clock = document.querySelector<HTMLElement>('#clock');
 const postsData = document.querySelector<HTMLScriptElement>('#posts-data');
+const promptPath = document.querySelector<HTMLElement>('.prompt-path');
 
-if (!output || !form || !input || !suggestions || !postsData) {
+if (!output || !form || !input || !suggestions || !postsData || !promptPath) {
   throw new Error('Terminal failed to initialize.');
 }
 
 const posts: Post[] = JSON.parse(postsData.textContent || '[]');
 const history: string[] = [];
 let historyIndex = 0;
+let currentDirectory: '~' | '~/writing' | '~/projects' = '~';
 const themes = ['green', 'amber', 'blue'] as const;
 
 function element<K extends keyof HTMLElementTagNameMap>(
@@ -53,9 +55,13 @@ function print(text = '', className = '') {
 
 function printCommand(command: string) {
   const row = element('div', 'executed-command');
-  const prompt = element('span', 'executed-prompt', 'alyosha@personal-site:~$');
+  const prompt = element('span', 'executed-prompt', `alyosha@personal-site:${currentDirectory}$`);
   row.append(prompt, document.createTextNode(` ${command}`));
   append(row);
+}
+
+function updatePrompt() {
+  promptPath.textContent = currentDirectory;
 }
 
 function printLinks(items: Array<{ label: string; detail?: string; href: string }>) {
@@ -125,12 +131,44 @@ const commands: Record<string, Command> = {
       { label: 'source', detail: 'personal-site', href: 'https://github.com/alyosha31/personal-site' },
     ]),
   },
+  cd: {
+    usage: 'cd <directory>',
+    description: 'change working directory',
+    run: (args) => {
+      const target = (args[0] || '~').replace(/\/+$/, '');
+      if (target === '~' || target === '/' || target === '/home/alyosha/personal-site') {
+        currentDirectory = '~';
+      } else if (target === '..') {
+        currentDirectory = '~';
+      } else if (
+        target === 'writing' ||
+        target === './writing' ||
+        target === '~/writing' ||
+        target === '../writing'
+      ) {
+        currentDirectory = '~/writing';
+      } else if (
+        target === 'projects' ||
+        target === './projects' ||
+        target === '~/projects' ||
+        target === '../projects'
+      ) {
+        currentDirectory = '~/projects';
+      } else {
+        print(`cd: ${args[0]}: No such file or directory`, 'error');
+        return;
+      }
+      updatePrompt();
+    },
+  },
   ls: {
     usage: 'ls [writing|projects]',
     description: 'list files and directories',
     run: (args) => {
       if (args[0] === 'writing') return showWriting();
       if (args[0] === 'projects') return showProjects();
+      if (currentDirectory === '~/writing') return showWriting();
+      if (currentDirectory === '~/projects') return showProjects();
       print('README.md   about.txt   writing/   projects/   contact.link');
     },
   },
@@ -138,7 +176,7 @@ const commands: Record<string, Command> = {
     usage: 'cat <file>',
     description: 'read a file or post',
     run: (args) => {
-      const target = (args[0] || '').replace(/\.md$/, '');
+      const target = (args[0] || '').replace(/^writing\//, '').replace(/\.md$/, '');
       if (target === 'about' || target === 'about.txt') return commands.about.run([]);
       if (target === 'readme' || target === 'README') {
         print('A personal site for writing, projects, and notes from the messy middle.');
@@ -164,7 +202,10 @@ const commands: Record<string, Command> = {
     },
   },
   whoami: { description: 'print the current user', run: () => print('guest — welcome, make yourself at home.') },
-  pwd: { description: 'print working directory', run: () => print('/home/alyosha/personal-site') },
+  pwd: {
+    description: 'print working directory',
+    run: () => print(`/home/alyosha/personal-site${currentDirectory === '~' ? '' : currentDirectory.slice(1)}`),
+  },
   date: { description: 'print the current date', run: () => print(new Date().toString()) },
   history: { description: 'show command history', run: () => print(history.map((item, index) => `${index + 1}  ${item}`).join('\n')) },
   theme: {
@@ -201,20 +242,36 @@ function run(value: string) {
 }
 
 function updateSuggestions() {
-  const value = input.value.trim().toLowerCase();
-  if (!value || value.includes(' ')) {
+  const value = input.value.toLowerCase();
+  const parts = value.split(/\s+/);
+  const commandName = parts[0];
+  const fragment = parts.at(-1) || '';
+  const argumentOptions: Record<string, string[]> = {
+    cd: ['~', '..', 'writing/', 'projects/'],
+    ls: ['writing', 'projects'],
+    cat: currentDirectory === '~/writing'
+      ? posts.map((post) => `${post.slug}.md`)
+      : ['README.md', 'about.txt', ...posts.map((post) => `writing/${post.slug}.md`)],
+    open: ['writing', 'github', ...posts.map((post) => post.slug)],
+    theme: [...themes],
+  };
+  const isArgument = value.includes(' ');
+  const source = isArgument ? (argumentOptions[commandName] || []) : Object.keys(commands);
+  const matches = source.filter((name) => name.toLowerCase().startsWith(fragment)).slice(0, 6);
+  if (!value.trim() || matches.length === 0) {
     suggestions.hidden = true;
     suggestions.replaceChildren();
     return;
   }
-  const matches = Object.keys(commands).filter((name) => name.startsWith(value)).slice(0, 6);
   suggestions.replaceChildren();
-  matches.forEach((name) => {
-    const button = element('button', '', name);
+  matches.forEach((match) => {
+    const button = element('button', '', match);
     button.type = 'button';
     button.addEventListener('mousedown', (event) => {
       event.preventDefault();
-      input.value = name;
+      input.value = isArgument
+        ? `${parts.slice(0, -1).join(' ')} ${match}`
+        : match;
       input.focus();
       updateSuggestions();
     });
@@ -242,8 +299,13 @@ input.addEventListener('keydown', (event) => {
     updateSuggestions();
   } else if (event.key === 'Tab') {
     event.preventDefault();
-    const match = Object.keys(commands).find((name) => name.startsWith(input.value.toLowerCase()));
-    if (match) input.value = match;
+    const firstSuggestion = suggestions.querySelector<HTMLButtonElement>('button');
+    if (firstSuggestion) {
+      const value = input.value;
+      input.value = value.includes(' ')
+        ? `${value.slice(0, value.lastIndexOf(' ') + 1)}${firstSuggestion.textContent}`
+        : firstSuggestion.textContent || value;
+    }
     updateSuggestions();
   } else if (event.key.toLowerCase() === 'l' && event.ctrlKey) {
     event.preventDefault();
