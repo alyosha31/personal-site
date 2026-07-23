@@ -87,11 +87,14 @@ page template:
 title: "Project name"
 description: "What it is and why it matters."
 source: "https://github.com/your-name/project"
-order: 4
+order: 4             # ascending order after pinned projects
 status: "in progress" # optional
 draft: true            # optional; hides the project
 ---
 ```
+
+Set `order: 0` to pin a project above the normal list with a featured style.
+Projects without an `order` are placed after explicitly ordered projects.
 
 Publishing a post is:
 

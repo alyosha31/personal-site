@@ -6,13 +6,20 @@ const posts = (await getCollection('posts'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const projects = (await getCollection('projects'))
-  .filter((project) => !project.data.draft)
-  .sort((a, b) => a.data.order - b.data.order);
+const visibleProjects = (await getCollection('projects'))
+  .filter((project) => !project.data.draft);
+
+const compareProjects = (a: typeof visibleProjects[number], b: typeof visibleProjects[number]) =>
+  a.data.order - b.data.order || a.data.title.localeCompare(b.data.title);
+
+const projects = [
+  ...visibleProjects.filter((project) => project.data.order === 0).sort(compareProjects),
+  ...visibleProjects.filter((project) => project.data.order !== 0).sort(compareProjects),
+];
 ---
 
 <SiteLayout
-  description="Alyosha's personal site — writing, software projects, and notes."
+        description="Alyosha's personal site. Software, Papers, and Notes."
   shellClass="home-shell"
 >
       <section>
@@ -34,9 +41,10 @@ const projects = (await getCollection('projects'))
         <h2>Projects</h2>
         <div class="project-list">
           {projects.map((project) => (
-            <article>
+            <article class:list={{ 'project-featured': project.data.order === 0 }}>
               <div>
                 <h3>
+                  {project.data.order === 0 && <span class="project-pin">Pinned</span>}
                   {project.data.title}
                   {project.data.status && <span aria-label={project.data.status}> ({project.data.status})</span>}
                 </h3>
