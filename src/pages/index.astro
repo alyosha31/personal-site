@@ -1,0 +1,20 @@
+---
+import '../../app/globals.css';
+
+const posts = [
+  ['Jul 18, 2026', 'The quiet craft of making things that last', 'A note on choosing durable ideas over loud ones, and why the best work often starts with paying better attention.', 'Essays'],
+  ['Jun 30, 2026', 'A field guide to useful side projects', 'Small rules for turning curiosity into something you can actually finish.', 'Building'],
+  ['May 12, 2026', 'Notes from a slower internet', 'What I’m keeping, what I’m leaving, and the tools that help me think clearly.', 'Notes'],
+  ['Apr 04, 2026', 'Learning in public, without performing', 'On sharing unfinished work with generosity, context, and a little less noise.', 'Essays'],
+];
+---
+
+<main>
+  <nav class="nav shell" aria-label="Main navigation"><a class="wordmark" href="#top">/a</a><div class="nav-links"><a href="#writing">Writing</a><a href="#projects">Projects</a><a href="#about">About</a></div><a class="nav-contact" href="mailto:hello@example.com">Say hello <span>↗</span></a></nav>
+  <section class="hero shell" id="top"><p class="eyebrow">Personal notes · ideas · things made</p><h1>Making sense of<br /><em>the messy middle.</em></h1><div class="hero-bottom"><p class="intro">I’m Alex — a builder and curious person writing about technology, creative work, and the small choices that shape a good life.</p><a class="scroll-cue" href="#writing"><span class="arrow-circle">↓</span> Start reading</a></div></section>
+  <section class="feature shell" id="writing"><div class="section-label"><span>01</span> Featured writing</div><article class="feature-card"><div class="feature-art" aria-hidden="true"><span class="art-sun"></span><span class="art-line line-one"></span><span class="art-line line-two"></span><span class="art-note">a little<br />further →</span></div><div class="feature-copy"><p class="post-meta">{posts[0][0]} <span>·</span> {posts[0][3]}</p><h2>{posts[0][1]}</h2><p>{posts[0][2]}</p><a class="read-link" href="#read">Read the essay <span>↗</span></a></div></article></section>
+  <section class="archive shell"><div class="archive-head"><div class="section-label"><span>02</span> The archive</div><p>A running collection of thoughts, experiments, and observations.</p></div><div class="post-list">{posts.slice(1).map((post) => <a class="post-row" href="#read"><p class="post-meta">{post[0]}</p><div><h3>{post[1]}</h3><p>{post[2]}</p></div><span class="post-tag">{post[3]}</span><span class="row-arrow">↗</span></a>)}</div><a class="all-posts" href="#writing">Browse all writing <span>→</span></a></section>
+  <section class="projects shell" id="projects"><div class="section-label"><span>03</span> Things I’m making</div><div class="projects-grid"><div><h2>Ideas are better<br /><em>when they ship.</em></h2></div><div class="project-placeholder"><span>Coming soon</span><p>A few experiments and tools<br />will live here soon.</p></div></div></section>
+  <section class="about shell" id="about"><p class="eyebrow">A bit about me</p><div class="about-grid"><h2>Still figuring it out,<br /><em>one note at a time.</em></h2><p>This is where I keep the things I don’t want to lose: questions, half-formed ideas, and lessons from building on the internet. Thanks for stopping by.</p></div></section>
+  <footer class="footer shell"><span>© 2026 Alex</span><span>Made with curiosity + a decent cup of coffee</span><div><a href="#top">Top ↑</a><a href="https://github.com">GitHub ↗</a></div></footer>
+</main>
