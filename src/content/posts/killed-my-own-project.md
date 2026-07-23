@@ -1,7 +1,7 @@
 ---
-title: "A Sufferer of Killed Projects Gets His Own Project Killed"
+title: "I Built a Project. Twenty-Four Hours Later, It Was Already Obsolete."
 description: "I started building a sandbox for coding agents. Google announced its alternative the next day."
-date: "2026-07-23"
+date: "2026-05-23"
 tags: ["agents", "infrastructure", "sandboxing"]
 ---
 
@@ -13,23 +13,23 @@ On April 22, I made the first commits to
 Google Cloud Next ’26, Google announced
 [GKE Agent Sandbox](https://cloud.google.com/blog/products/containers-kubernetes/whats-new-in-gke-at-next26).
 
-For someone already wary of projects disappearing into the graveyard, this
-felt like a new achievement: getting my own project killed before it had really
-lived.
-
 ## Why I built it
 
-Agents can write code, call tools, install packages, and manipulate files.
+At my workplace, we were building agents which could do a lot of tool calling
+over MCP servers hosted at our client's cloud platforms, however they could not 
+make use of what they do the best: generate code.
+
+Agents are supposed to write code, call tools, install packages, and manipulate files.
 That is useful right up until the generated program hangs forever, deletes
 something important, or runs code that should never have shared a machine with
 the application in the first place.
 
 I wanted a small service that put a hard boundary between an agent and the code
-it executes. The interface should be boring: send code over HTTP, run it
-somewhere disposable, and get structured output back. Longer tasks should be
-able to keep a session, a working directory, and an environment between calls.
+it executes. The interface should be basic of course: send code over HTTP, run it on our client's cloud, 
+and get structured output back. 
+Longer tasks should be able to keep a session, a working directory, and an environment between calls.
 
-The prototype grew into two paths:
+The two pathways were:
 
 - a stateless `/exec` endpoint for one-off programs;
 - persistent `/sessions` with their own workspace and Python environment.
@@ -45,9 +45,9 @@ curl -X POST http://localhost:8080/exec \
   }'
 ```
 
-Commands run in subprocesses with timeouts and captured output. I also added
-connectors for Google Cloud Storage, BigQuery, and Firestore, plus Kubernetes
-manifests intended to run the service under gVisor.
+Commands run in subprocesses with timeouts and captured output. 
+Agents eventually need access to real customer data, so I added connectors for GCS, BigQuery, and Firestore while keeping the interface abstract enough to support AWS later.
+Kubernetes manifests intended to run the service under gVisor, because the underlying kernel needs protection from generated code (not every model is Fable).
 
 > [!NOTE]
 > The repository is a prototype and a way to understand the boundary. It is not
@@ -65,29 +65,23 @@ of the problem: isolated environments for agents to execute untrusted code and
 tools, built on GKE and gVisor, with fast startup and enough scale to create
 hundreds of sandboxes per second.
 
-My first reaction was predictable: well, there goes the project.
+My first reaction was predictable: wow so much for spending so much of my time.
 
 But a managed product does not make the underlying problem uninteresting. It
 changes where the interesting work begins. Once provisioning, isolation, and
 lifecycle management are available as infrastructure, the questions move
-upward: what state should survive, which tools should an agent receive, how do
+a layer up: what state should survive, which tools should an agent receive, how do
 we observe failures, and how do we evaluate whether the agent did the right
 thing rather than merely finishing?
 
 ## So, was it killed?
 
-Not really.
+Not really. I am not gonna lie here and say the idea was novel. In fact, hundreds of startups had already been solving a variation of this problem before I even understood the premise.
 
-Google announcing an agent sandbox one day after my first commit was less a
-funeral than unusually fast validation. I had picked a real problem. I had also
-underestimated how much separates a useful local prototype from a production
+Describing the incident to a friend did change my perspective though. It was fast validation from the tech giant, atleast in terms of the tech stack and the approach. 
+I had also severely underestimated how much separates a useful local prototype from a production
 control plane: scheduling, tenancy, pooling, quotas, observability, policy, and
 the endless unglamorous work around failure.
 
-That is precisely why building the smaller version was worthwhile. Managed
-infrastructure can save me from operating every layer, but it cannot replace
-understanding the layer. The next project will be better because I now know
-where the easy demo ends and the systems problem starts.
+Really interesting times for builders ahead.
 
-If anything, Google did not kill my project. It gave me a roadmap—and impeccable
-comic timing.
