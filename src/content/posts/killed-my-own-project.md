@@ -5,8 +5,7 @@ date: "2026-05-23"
 tags: ["agents", "infrastructure", "sandboxing"]
 ---
 
-There is a particular kind of comedy in spending a day building infrastructure
-only to watch Google announce the same category of product the next morning.
+Particular type of comedy that unfolded before my eyes as I spent a day building infrastructure only to watch Google announce the same category of product the next morning.
 
 On April 22, I made the first commits to
 [cloud-sandbox](https://github.com/alyosha31/cloud-sandbox). On April 23, at
@@ -17,7 +16,7 @@ Google Cloud Next ’26, Google announced
 
 At my workplace, we were building agents which could do a lot of tool calling
 over MCP servers hosted at our client's cloud platforms, however they could not 
-make use of what they do the best: generate code.
+make use of what they do best: generate code.
 
 Agents are supposed to write code, call tools, install packages, and manipulate files.
 That is useful right up until the generated program hangs forever, deletes
@@ -76,9 +75,7 @@ thing rather than merely finishing?
 
 ## Bury it, RIP?
 
-Not really. I am not gonna lie here and say the idea was novel. In fact, hundreds of startups had already been solving a variation of this problem before I even understood the premise.
-
-Describing the incident to a friend did change my perspective though. It was fast validation from the tech giant, atleast in terms of the tech stack and the approach. 
+Maybe it was quick validation from the tech giant, atleast in terms of the tech stack and the approach. 
 I had also severely underestimated how much separates a useful local prototype from a production
 control plane: scheduling, tenancy, pooling, quotas, observability, policy, and
 the endless unglamorous work around failure.
